@@ -4,11 +4,12 @@ events = []
 dates = []
 starttime = []
 endtime = []
- 
+
+filestr4 = 'db/events.csv'
 
 def eventcsvread():
     try:
-        with open('events.csv') as csvfile:
+        with open(filestr4) as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             for row in reader:
                 events.append(row[0])
@@ -17,12 +18,12 @@ def eventcsvread():
                 endtime.append(row[3])
 
     except FileNotFoundError:
-        open('events.csv', 'w')
+        open(filestr4, 'w')
         eventcsvread()
             
 
 def eventcsvwrite():
-    with open('events.csv', 'a', newline='') as csvfile:
+    with open(filestr4, 'a', newline='') as csvfile:
         filewriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
         event_name = input('Event name: ')
@@ -46,6 +47,7 @@ def eventllist():
     for i in range(0, namelen):
         print(listnum, '. ', events[i])
         listnum += 1
+    input('>')
 
 
 def eventlistclear():
@@ -62,13 +64,13 @@ def eventadd():
     
 
 def eventdelete():
-    file = open('events.csv', 'r')
+    file = open(filestr4, 'r')
     lines = file.readlines()
     file.close()
     delnum = int(input('Events number to delete: '))
     delnum -= 1
     del lines[delnum]
-    open('Events.csv', 'w').writelines(lines)
+    open(filestr4, 'w').writelines(lines)
     eventlistclear()
     eventcsvread()
 
